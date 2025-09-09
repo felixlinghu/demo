@@ -2,6 +2,7 @@ package com.example.day7springboot.controller;
 
 
 import java.util.Objects;
+import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,7 +35,12 @@ public class EmployeeController {
     return employees.stream().filter(employee -> Objects.equals(employee.id(), id)).findFirst().orElse(null);
   }
   @GetMapping
+  @ResponseStatus(HttpStatus.OK)
   public List<Employee> getListByGender(@RequestParam(required = false) String gender){
     return employees.stream().filter(employee -> employee.gender().equals(gender)).toList();
+  }
+
+  public void clear() {
+    employees.clear();
   }
 }

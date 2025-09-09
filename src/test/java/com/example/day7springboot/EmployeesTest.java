@@ -6,6 +6,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.example.day7springboot.controller.Employee;
 import com.example.day7springboot.controller.EmployeeController;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -23,7 +25,10 @@ public class EmployeesTest {
   private MockMvc mockMvc;
   @Autowired
   private EmployeeController employeeController;
-
+@BeforeEach
+public void setUp(){
+  employeeController.clear();
+}
   @Test
   public void should_return_created_employees_when_post() throws Exception {
     //given
@@ -60,8 +65,8 @@ public class EmployeesTest {
   @Test
   public void should_return_male_employees_when_get_males() throws Exception {
     //given
-    Employee employee1 = employeeController.create(new Employee(null, "John Smith", 32, "Male", 5000.0));
-    Employee employee2 = employeeController.create(new Employee(null, "Vega Feng", 21, "FeMale", 5000.0));
+    Employee employee1 = employeeController.create(new Employee(3, "John Smith", 32, "Male", 5000.0));
+    Employee employee2 = employeeController.create(new Employee(4, "Vega Feng", 21, "FeMale", 5000.0));
     MockHttpServletRequestBuilder request = get("/employees?gender=Male").contentType(MediaType.APPLICATION_JSON);
     mockMvc.perform(request)
         .andExpect(status().isOk())
