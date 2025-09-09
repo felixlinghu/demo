@@ -127,7 +127,7 @@ public class EmployeesTest {
 
     MockHttpServletRequestBuilder request = delete("/employees" + id).contentType(MediaType.APPLICATION_JSON);
     mockMvc.perform(request)
-        .andExpect(status().isOk());
+        .andExpect(status().isNoContent());
     assertNull(employeeController.getEmployeeById(employee1.id()));
 
   }

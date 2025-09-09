@@ -59,7 +59,7 @@ public class EmployeeController {
   }
 
   @DeleteMapping("/{id}")
-  @ResponseStatus(HttpStatus.OK)
+  @ResponseStatus(HttpStatus.NO_CONTENT)
   public void deleteEmployeeById(@PathVariable Integer id) {
     Employee employee2 = employees.stream().filter(employee1 -> Objects.equals(employee1.id(), id)).findFirst().orElse(null);
     employees.remove(employee2);
