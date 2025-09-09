@@ -31,7 +31,7 @@ public class EmployeeController {
 
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
-  public Employee create(@RequestBody Employee employee) {
+  public Employee createEmployee(@RequestBody Employee employee) {
     Employee newEmployee = new Employee(employees.size() + 1, employee.name(), employee.age(), employee.gender(), employee.salary());
     employees.add(newEmployee);
     return newEmployee;
@@ -45,7 +45,7 @@ public class EmployeeController {
 
   @GetMapping(params = "gender")
   @ResponseStatus(HttpStatus.OK)
-  public List<Employee> getListByGender(@RequestParam(required = true) String gender) {
+  public List<Employee> getEmployeeByGender(@RequestParam(required = true) String gender) {
     return employees.stream().filter(employee -> employee.gender().equals(gender)).toList();
   }
 
@@ -60,13 +60,13 @@ public class EmployeeController {
 
   @DeleteMapping("/{id}")
   @ResponseStatus(HttpStatus.OK)
-  public void updateEmployeeById(@PathVariable Integer id) {
+  public void deleteEmployeeById(@PathVariable Integer id) {
     Employee employee2 = employees.stream().filter(employee1 -> Objects.equals(employee1.id(), id)).findFirst().orElse(null);
     employees.remove(employee2);
   }
 
   @GetMapping(params = {"page", "size"})
-  public List<Employee> pageQuery(@RequestParam int page, @RequestParam int size) {
+  public List<Employee> getEmployeeWithPageQuery(@RequestParam int page, @RequestParam int size) {
     int fromIndex = (page - 1) * size;
     int toIndex = Math.min(fromIndex + size, employees.size());
     if (fromIndex >= employees.size()) {

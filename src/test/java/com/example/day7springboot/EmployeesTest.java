@@ -7,7 +7,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.example.day7springboot.controller.Employee;
 import com.example.day7springboot.controller.EmployeeController;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,7 +55,7 @@ public class EmployeesTest {
   @Test
   public void should_return_employees_when_get_employees_id_correct() throws Exception {
     //given
-    Employee employee = employeeController.create(new Employee(2, "John Smith", 32, "Male", 5000.0));
+    Employee employee = employeeController.createEmployee(new Employee(2, "John Smith", 32, "Male", 5000.0));
     String id = "/" + employee.id();
     MockHttpServletRequestBuilder request = get("/employees" + id).contentType(MediaType.APPLICATION_JSON);
     mockMvc.perform(request)
@@ -70,8 +69,8 @@ public class EmployeesTest {
   @Test
   public void should_return_male_employees_when_get_males() throws Exception {
     //given
-    Employee employee1 = employeeController.create(new Employee(3, "John Smith", 32, "Male", 5000.0));
-    Employee employee2 = employeeController.create(new Employee(4, "Vega Feng", 21, "FeMale", 5000.0));
+    Employee employee1 = employeeController.createEmployee(new Employee(3, "John Smith", 32, "Male", 5000.0));
+    Employee employee2 = employeeController.createEmployee(new Employee(4, "Vega Feng", 21, "FeMale", 5000.0));
     MockHttpServletRequestBuilder request = get("/employees?gender=Male").contentType(MediaType.APPLICATION_JSON);
     mockMvc.perform(request)
         .andExpect(status().isOk())
@@ -85,8 +84,8 @@ public class EmployeesTest {
   @Test
   public void should_return_all_employees_when_get_employees() throws Exception {
     //given
-    Employee employee1 = employeeController.create(new Employee(3, "John Smith", 32, "Male", 5000.0));
-    Employee employee2 = employeeController.create(new Employee(4, "Vega Feng", 21, "FeMale", 5000.0));
+    Employee employee1 = employeeController.createEmployee(new Employee(3, "John Smith", 32, "Male", 5000.0));
+    Employee employee2 = employeeController.createEmployee(new Employee(4, "Vega Feng", 21, "FeMale", 5000.0));
     MockHttpServletRequestBuilder request = get("/employees").contentType(MediaType.APPLICATION_JSON);
     mockMvc.perform(request)
         .andExpect(status().isOk())
@@ -100,8 +99,8 @@ public class EmployeesTest {
   @Test
   public void should_return_update_employees_when_update_employees() throws Exception {
     //given
-    Employee employee1 = employeeController.create(new Employee(3, "John Smith", 32, "Male", 5000.0));
-    Employee employee2 = employeeController.create(new Employee(4, "Vega Feng", 21, "FeMale", 5000.0));
+    Employee employee1 = employeeController.createEmployee(new Employee(3, "John Smith", 32, "Male", 5000.0));
+    Employee employee2 = employeeController.createEmployee(new Employee(4, "Vega Feng", 21, "FeMale", 5000.0));
     String id = "/" + employee1.id();
     String requestBody = """
                 {
@@ -122,8 +121,8 @@ public class EmployeesTest {
   @Test
   public void should_return_null_when_delete_employees() throws Exception {
     //given
-    Employee employee1 = employeeController.create(new Employee(3, "John Smith", 32, "Male", 5000.0));
-    Employee employee2 = employeeController.create(new Employee(4, "Vega Feng", 21, "FeMale", 5000.0));
+    Employee employee1 = employeeController.createEmployee(new Employee(3, "John Smith", 32, "Male", 5000.0));
+    Employee employee2 = employeeController.createEmployee(new Employee(4, "Vega Feng", 21, "FeMale", 5000.0));
     String id = "/" + employee1.id();
 
     MockHttpServletRequestBuilder request = delete("/employees" + id).contentType(MediaType.APPLICATION_JSON);
@@ -136,9 +135,9 @@ public class EmployeesTest {
   @Test
   public void should_return_page_when_get_employees_with_page() throws Exception {
     //given
-    Employee employee1 = employeeController.create(new Employee(3, "John Smith", 32, "Male", 5000.0));
-    Employee employee2 = employeeController.create(new Employee(4, "Vega Feng", 21, "FeMale", 5000.0));
-    Employee employee3 = employeeController.create(new Employee(4, "Vega Feng", 21, "FeMale", 5000.0));
+    Employee employee1 = employeeController.createEmployee(new Employee(3, "John Smith", 32, "Male", 5000.0));
+    Employee employee2 = employeeController.createEmployee(new Employee(4, "Vega Feng", 21, "FeMale", 5000.0));
+    Employee employee3 = employeeController.createEmployee(new Employee(4, "Vega Feng", 21, "FeMale", 5000.0));
     MockHttpServletRequestBuilder request = get("/employees?page=1&size=2").contentType(MediaType.APPLICATION_JSON);
     mockMvc.perform(request)
         .andExpect(status().isOk())
