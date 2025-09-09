@@ -66,20 +66,31 @@ class CompanyControllTest {
                 .andExpect(jsonPath("$.length()").value(2))
                 .andExpect(jsonPath("$[0].name").value("alibaba"));
     }
+
     @Test
     public void should_update_company_when_update_company_with_id() throws Exception {
         Company company = companyControll.createCompany(new Company(null, "alibaba"));
-        String id="/"+company.id();
+        String id = "/" + company.id();
         String requestBody = """
                         {
                         "id":1,
                         "name": "tencent"
                         }
                 """;
-        MockHttpServletRequestBuilder request = put("/companies"+id).contentType(MediaType.APPLICATION_JSON).content(requestBody);
+        MockHttpServletRequestBuilder request = put("/companies" + id).contentType(MediaType.APPLICATION_JSON).content(requestBody);
         mockMvc.perform(request)
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.name").value("tencent"));
     }
+    @Test
+    public void should_delete_company_when_delete_company_with_id() throws Exception {
+        Company company = companyControll.createCompany(new Company(null, "alibaba"));
+        String id = "/" + company.id();
+        MockHttpServletRequestBuilder request = delete("/companies" + id).contentType(MediaType.APPLICATION_JSON);
+        mockMvc.perform(request)
+                .andExpect(status().isNoContent());
+
+    }
+
 
 }

@@ -45,4 +45,8 @@ public class CompanyService {
         });
         return getCompanyById(id);
     }
+
+    public void deleteCompanyById(Integer id) {
+        companies.removeIf(company -> company.id().equals(id));
+    }
 }
