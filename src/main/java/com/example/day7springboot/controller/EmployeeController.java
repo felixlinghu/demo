@@ -4,6 +4,7 @@ package com.example.day7springboot.controller;
 import java.util.Objects;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -52,6 +53,13 @@ public class EmployeeController {
     employees.add(employee);
     return getEmployeeById(id);
   }
+  @DeleteMapping ("/{id}")
+  @ResponseStatus(HttpStatus.OK)
+  public void updateEmployeeById(@PathVariable Integer id) {
+    Employee employee2 = employees.stream().filter(employee1 -> Objects.equals(employee1.id(), id)).findFirst().orElse(null);
+    employees.remove(employee2);
+  }
+
   public void clear() {
     employees.clear();
   }

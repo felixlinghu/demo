@@ -1,5 +1,6 @@
 package com.example.day7springboot;
 
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -121,6 +122,7 @@ public void setUp(){
     MockHttpServletRequestBuilder request = delete("/employees"+id).contentType(MediaType.APPLICATION_JSON);
     mockMvc.perform(request)
         .andExpect(status().isOk());
+    assertNull(employeeController.getEmployeeById(employee1.id()));
 
   }
 
