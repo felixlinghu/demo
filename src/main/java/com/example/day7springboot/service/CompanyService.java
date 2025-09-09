@@ -25,4 +25,8 @@ public class CompanyService {
         companies.add(newCompany);
         return newCompany;
     }
+
+    public Company getCompanyById(Integer id) {
+        return companies.stream().filter(company -> company.id().equals(id)).findFirst().orElse(null);
+    }
 }

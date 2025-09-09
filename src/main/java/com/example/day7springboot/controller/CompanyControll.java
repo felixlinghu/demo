@@ -28,4 +28,9 @@ public class CompanyControll {
     public Company createCompany(@RequestBody Company company) {
          return companyService.createCompany(company);
     }
+    @GetMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public Company getCompanyById(@PathVariable Integer id) {
+        return companyService.getCompanyById(id);
+    }
 }
