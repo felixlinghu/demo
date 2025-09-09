@@ -1,6 +1,7 @@
 package com.example.day7springboot.controller;
 
 import com.example.day7springboot.entity.Company;
+import com.example.day7springboot.entity.Employee;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -82,6 +83,7 @@ class CompanyControllTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.name").value("tencent"));
     }
+
     @Test
     public void should_delete_company_when_delete_company_with_id() throws Exception {
         Company company = companyControll.createCompany(new Company(null, "alibaba"));
@@ -90,6 +92,21 @@ class CompanyControllTest {
         mockMvc.perform(request)
                 .andExpect(status().isNoContent());
 
+    }
+
+    @Test
+    public void should_return_page_when_get_employees_with_page() throws Exception {
+        //given
+        companyControll.createCompany(new Company(null, "alibaba"));
+        companyControll.createCompany(new Company(null, "tencent"));
+        companyControll.createCompany(new Company(null, "baidu"));
+        companyControll.createCompany(new Company(null, "meituan"));
+        companyControll.createCompany(new Company(null, "xiaomi"));
+        companyControll.createCompany(new Company(null, "huawei"));
+        MockHttpServletRequestBuilder request = get("/companies?page=1&size=5").contentType(MediaType.APPLICATION_JSON);
+        mockMvc.perform(request)
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.length()").value(5));
     }
 
 

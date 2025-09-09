@@ -49,4 +49,15 @@ public class CompanyService {
     public void deleteCompanyById(Integer id) {
         companies.removeIf(company -> company.id().equals(id));
     }
+
+    public List<Company> getAllCompanies(Integer page, Integer size) {
+        Integer pageNum = (page != null) ? page : 1;
+        Integer pageSize = (size != null) ? size : 10;
+        int fromIndex = (pageNum - 1) * pageSize;
+        int toIndex = Math.min(fromIndex + pageSize, companies.size());
+        if (fromIndex >= companies.size()) {
+            return new ArrayList<>();
+        }
+        return companies.subList(fromIndex, toIndex);
+    }
 }

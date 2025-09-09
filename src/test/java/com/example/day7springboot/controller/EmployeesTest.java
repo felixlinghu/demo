@@ -1,4 +1,4 @@
-package com.example.day7springboot;
+package com.example.day7springboot.controller;
 
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;

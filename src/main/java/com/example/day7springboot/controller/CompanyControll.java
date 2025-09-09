@@ -37,8 +37,9 @@ public class CompanyControll {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public java.util.List<Company> getAllCompanies() {
-        return companyService.getAllCompanies();
+    public java.util.List<Company> getAllCompanies(@RequestParam(required = false) Integer page,
+                                                   @RequestParam(required = false) Integer size) {
+        return companyService.getAllCompanies(page, size);
     }
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
@@ -50,6 +51,7 @@ public class CompanyControll {
     public void deleteCompanyById(@PathVariable Integer id) {
         companyService.deleteCompanyById(id);
     }
+
 
     public void clearCompanies() {
         companyService.clearCompanies();
