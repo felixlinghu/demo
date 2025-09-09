@@ -3,6 +3,9 @@ package com.example.day7springboot;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import com.example.day7springboot.controller.Employee;
+import com.example.day7springboot.controller.EmployeeController;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -18,6 +21,8 @@ public class EmployeesTest {
 
   @Autowired
   private MockMvc mockMvc;
+  @Autowired
+  private EmployeeController employeeController;
 
   @Test
   public void should_return_created_employees_when_post() throws Exception {
@@ -39,5 +44,20 @@ public class EmployeesTest {
         .andExpect(jsonPath("$.gender").value("Male"))
         .andExpect(jsonPath("$.salary").value(5000.0));
   }
+  @Test
+  public void should_return_employees_when_get_employees_id_correct() throws Exception {
+    //given
+    Employee employee = employeeController.create(new Employee(1, "John Smith", 32, "Male", 5000.0));
+    String id = "/"+employee.id();
+    MockHttpServletRequestBuilder request = get("/employees"+id).contentType(MediaType.APPLICATION_JSON);
+    mockMvc.perform(request)
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.id").value(1))
+        .andExpect(jsonPath("$.name").value("John Smith"))
+        .andExpect(jsonPath("$.age").value(32))
+        .andExpect(jsonPath("$.gender").value("Male"))
+        .andExpect(jsonPath("$.salary").value(5000.0));
+  }
+
 
 }
