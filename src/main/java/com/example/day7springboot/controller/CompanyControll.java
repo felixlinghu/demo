@@ -40,6 +40,11 @@ public class CompanyControll {
     public java.util.List<Company> getAllCompanies() {
         return companyService.getAllCompanies();
     }
+    @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public Company updateCompanyById(@PathVariable Integer id,@RequestBody Company company) {
+        return companyService.updateCompanyById(id,company);
+    }
 
     public void clearCompanies() {
         companyService.clearCompanies();

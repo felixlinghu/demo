@@ -38,4 +38,11 @@ public class CompanyService {
     public void clearCompanies() {
         companies.clear();
     }
+
+    public Company updateCompanyById(Integer id, Company company) {
+        companies.stream().filter(c -> c.id().equals(id)).findFirst().ifPresent(c -> {
+            companies.set(companies.indexOf(c), new Company(id, company.name()));
+        });
+        return getCompanyById(id);
+    }
 }
