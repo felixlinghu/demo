@@ -21,7 +21,11 @@ import java.util.List;
 public class EmployeeController {
 
   private List<Employee> employees = new ArrayList<>();
-
+  @GetMapping("")
+  @ResponseStatus(HttpStatus.OK)
+  public List<Employee> getAllEmployees(){
+    return employees;
+  }
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
   public Employee create(@RequestBody Employee employee) {
@@ -34,11 +38,12 @@ public class EmployeeController {
   public Employee getEmployeeById(@PathVariable Integer id) {
     return employees.stream().filter(employee -> Objects.equals(employee.id(), id)).findFirst().orElse(null);
   }
-  @GetMapping
+  @GetMapping(params = "gender")
   @ResponseStatus(HttpStatus.OK)
   public List<Employee> getListByGender(@RequestParam(required = false) String gender){
     return employees.stream().filter(employee -> employee.gender().equals(gender)).toList();
   }
+
 
   public void clear() {
     employees.clear();

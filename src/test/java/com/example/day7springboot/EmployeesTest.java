@@ -76,6 +76,21 @@ public void setUp(){
         .andExpect(jsonPath("$[0].gender").value("Male"))
         .andExpect(jsonPath("$[0].salary").value(5000.0));
   }
+  @Test
+  public void should_return_all_employees_when_get_employees() throws Exception {
+    //given
+    Employee employee1 = employeeController.create(new Employee(3, "John Smith", 32, "Male", 5000.0));
+    Employee employee2 = employeeController.create(new Employee(4, "Vega Feng", 21, "FeMale", 5000.0));
+    MockHttpServletRequestBuilder request = get("/employees").contentType(MediaType.APPLICATION_JSON);
+    mockMvc.perform(request)
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.length()").value(2))
+        .andExpect(jsonPath("$[0].name").value("John Smith"))
+        .andExpect(jsonPath("$[0].age").value(32))
+        .andExpect(jsonPath("$[0].gender").value("Male"))
+        .andExpect(jsonPath("$[0].salary").value(5000.0));
+  }
+
 
 
 
