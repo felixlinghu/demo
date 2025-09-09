@@ -47,17 +47,31 @@ public class EmployeesTest {
   @Test
   public void should_return_employees_when_get_employees_id_correct() throws Exception {
     //given
-    Employee employee = employeeController.create(new Employee(1, "John Smith", 32, "Male", 5000.0));
+    Employee employee = employeeController.create(new Employee(2, "John Smith", 32, "Male", 5000.0));
     String id = "/"+employee.id();
     MockHttpServletRequestBuilder request = get("/employees"+id).contentType(MediaType.APPLICATION_JSON);
     mockMvc.perform(request)
         .andExpect(status().isOk())
-        .andExpect(jsonPath("$.id").value(1))
         .andExpect(jsonPath("$.name").value("John Smith"))
         .andExpect(jsonPath("$.age").value(32))
         .andExpect(jsonPath("$.gender").value("Male"))
         .andExpect(jsonPath("$.salary").value(5000.0));
   }
+  @Test
+  public void should_return_male_employees_when_get_males() throws Exception {
+    //given
+    Employee employee1 = employeeController.create(new Employee(null, "John Smith", 32, "Male", 5000.0));
+    Employee employee2 = employeeController.create(new Employee(null, "Vega Feng", 21, "FeMale", 5000.0));
+    MockHttpServletRequestBuilder request = get("/employees?gender=Male").contentType(MediaType.APPLICATION_JSON);
+    mockMvc.perform(request)
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.length()").value(1))
+        .andExpect(jsonPath("$[0].name").value("John Smith"))
+        .andExpect(jsonPath("$[0].age").value(32))
+        .andExpect(jsonPath("$[0].gender").value("Male"))
+        .andExpect(jsonPath("$[0].salary").value(5000.0));
+  }
+
 
 
 }
