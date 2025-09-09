@@ -20,6 +20,7 @@ import java.util.List;
 @Service
 public class CompanyService {
     List<Company> companies = new ArrayList<>();
+
     public Company createCompany(Company company) {
         Company newCompany = new Company(companies.size() + 1, company.name());
         companies.add(newCompany);
@@ -28,5 +29,13 @@ public class CompanyService {
 
     public Company getCompanyById(Integer id) {
         return companies.stream().filter(company -> company.id().equals(id)).findFirst().orElse(null);
+    }
+
+    public List<Company> getAllCompanies() {
+        return companies;
+    }
+
+    public void clearCompanies() {
+        companies.clear();
     }
 }
